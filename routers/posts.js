@@ -69,8 +69,15 @@ router.get("/:id/comments", (req, res) => {
         })
 })
 
+// HAVING TROUBLE FIGURING OUT HOW TO SEND THE POST_ID
 router.post("/:id/comments", (req, res) => {
-    db.insertComment(req.body)
+    db.findCommentById(req.params.id)
+        .then(comment => {
+            if(comment) {
+                return db.insertComment(req.body)
+            }
+                res.status(404).json({ error: "Comment does not exist."})
+        })
         .then(data => {
             res.status(200).json(data)
         })
