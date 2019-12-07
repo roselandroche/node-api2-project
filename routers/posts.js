@@ -22,4 +22,61 @@ router.post("/", (req, res) => {
         })
 })
 
+router.get("/:id", (req, res) => {
+    db.findById(req.params.id)
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+// UPDATE WORKS BUT RETURNS A 1 INSTEAD OF UPDATED POST
+router.put("/:id", (req, res) => {
+    db.update(req.params.id, req.body)
+        .then(data => {
+            res.status(200).json(data)
+            console.log(data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+// DELETE WORKING BUT NOT RETURNING WHAT I WANT
+router.delete("/:id", (req, res) => {
+    let user = db.findById(req.params.id)
+
+    db.remove(user)
+        .then(user => {
+            if(!user) {
+                res.status(204).json({ message: "Post successfully deleted."})
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+router.get("/:id/comments", (req, res) => {
+    db.findPostComments(req.params.id)
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+router.post("/:id/comments", (req, res) => {
+    db.insertComment(req.body)
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
 module.exports = router
