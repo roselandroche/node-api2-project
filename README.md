@@ -17,7 +17,7 @@ Use `Node.js` and `Express` to build an API that performs _CRUD_ operations on `
 - clone **your copy** of this repository.
 - **CD into the folder** where you cloned the repository.
 - Type `npm install` to download all dependencies. DONE
-- To start the server, type `npm run server` from the root folder (where the _package.json_ file is). The server is configured to restart automatically as you make changes. ***ALREADY CRASHED***
+- To start the server, type `npm run server` from the root folder (where the _package.json_ file is). The server is configured to restart automatically as you make changes.
 
 ### Database Persistence Helpers
 
