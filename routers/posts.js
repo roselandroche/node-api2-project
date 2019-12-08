@@ -27,13 +27,17 @@ router.post("/", (req, res) => {
 })
 
 router.get("/:id", (req, res) => {
-    db.findById(req.params.id)
+    if(req.params.id) {
+        db.findById(req.params.id)
         .then(data => {
             res.status(200).json(data)
         })
         .catch(err => {
             res.status(500).json({ message: "The post information could not be retrieved."})
         })
+    } else {
+        res.status(404).json({ message: "The post with the specified ID does not exist."})
+    }
 })
 
 // UPDATE WORKS BUT RETURNS A 1 INSTEAD OF UPDATED POST
@@ -64,13 +68,18 @@ router.delete("/:id", (req, res) => {
 })
 
 router.get("/:id/comments", (req, res) => {
-    db.findPostComments(req.params.id)
-        .then(data => {
-            res.status(200).json(data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    if(req.params.id) {
+        db.findPostComments(req.params.id)
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(err => {
+                res.status(500).json({ message: "The comments information could not be retrieved."})
+            })
+    } else {
+        res.status(404).json({ message: "The post with the specified ID does not exist."})
+    }
+    
 })
 
 // HAVING TROUBLE FIGURING OUT HOW TO SEND THE POST_ID
