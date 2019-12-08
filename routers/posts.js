@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
             res.status(200).json(data)
         })
         .catch(err => {
-            console.log(err)
+            res.status(500).json({ message: "The posts information could not be retrieved." })
         })
 })
 
@@ -32,7 +32,7 @@ router.get("/:id", (req, res) => {
             res.status(200).json(data)
         })
         .catch(err => {
-            console.log(err)
+            res.status(500).json({ message: "The post information could not be retrieved."})
         })
 })
 
@@ -75,12 +75,13 @@ router.get("/:id/comments", (req, res) => {
 
 // HAVING TROUBLE FIGURING OUT HOW TO SEND THE POST_ID
 router.post("/:id/comments", (req, res) => {
+    
     // const commentId = 
-    db.findPostComments(req.params.id)
-        .then(comments => {
+    // db.findPostComments(req.params.id)
+    //     .then(comments => {
 
-        })
-        .catch()
+    //     })
+    //     .catch()
     // db.findCommentById(req.params.id)
     //     .then(data => {
     //         if(data) {
