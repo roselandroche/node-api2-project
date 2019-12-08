@@ -42,14 +42,20 @@ router.get("/:id", (req, res) => {
 
 // UPDATE WORKS BUT RETURNS A 1 INSTEAD OF UPDATED POST
 router.put("/:id", (req, res) => {
-    db.update(req.params.id, req.body)
-        .then(data => {
-            res.status(200).json(data)
-            console.log(data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    if(!res.body.title || !req.body.contents) {
+        return res.status(400).json({ message: "Please provide title and contents for the post."})
+    } else if(req.params.id) {
+        db.update(req.params.id, req.body)
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(err => {
+                res.status(500).json({ message: "The post information could not be modified."})
+            })
+    } else {
+        res.status(404).json({ message: "The post with the specified ID does not exist."})
+    }
+    
 })
 
 // DELETE WORKING BUT NOT RETURNING WHAT I WANT
