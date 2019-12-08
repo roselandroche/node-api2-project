@@ -61,16 +61,18 @@ router.put("/:id", (req, res) => {
 // DELETE WORKING BUT NOT RETURNING WHAT I WANT
 router.delete("/:id", (req, res) => {
     let user = db.findById(req.params.id)
-
-    db.remove(user)
-        .then(user => {
-            if(!user) {
+    if(user) {
+        db.remove(user)
+            .then(user => {
                 res.status(204).json({ message: "Post successfully deleted."})
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            })
+            .catch(err => {
+                res.status(500).json({ message: "The post could not be removed"})
+            })
+    } else {
+        res.status(404).json({ message: "The post with the specified ID does not exist."})
+    }
+    
 })
 
 router.get("/:id/comments", (req, res) => {
